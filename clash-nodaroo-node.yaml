@@ -1,0 +1,38 @@
+mixed-port: 7890
+allow-lan: false
+mode: rule
+log-level: info
+ipv6: false
+
+proxies:
+  - name: "Nodaroo-Hy2"
+    type: hysteria2
+    server: au2.nodaroo.fun
+    port: 2469
+    password: "NdHy2-9f3Kd8xQ-2026"
+    sni: au2.nodaroo.fun
+    skip-cert-verify: true
+
+  - name: "Nodaroo-VLESS"
+    type: vless
+    server: au2.nodaroo.fun
+    port: 2469
+    uuid: 7f3e9a1c-4b2d-4e8a-9c6e-1d5a3b7e9f02
+    udp: true
+    flow: xtls-rprx-vision
+    tls: true
+    servername: www.microsoft.com
+    client-fingerprint: chrome
+    reality-opts:
+      public-key: 1L_BMeHjg0yBb3yr2edYyvqrdFoqEf7i3BkQrrAgKlA
+      short-id: ""
+
+proxy-groups:
+  - name: "PROXY"
+    type: select
+    proxies:
+      - "Nodaroo-Hy2"
+      - "Nodaroo-VLESS"
+
+rules:
+  - MATCH,PROXY
