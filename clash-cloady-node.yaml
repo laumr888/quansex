@@ -1,0 +1,30 @@
+mixed-port: 7890
+allow-lan: false
+mode: rule
+log-level: info
+ipv6: false
+
+proxies:
+  - name: Cloady-Node
+    type: vless
+    server: ljx111cloady-eo3429fa-tony0976.cloady.io
+    port: 443
+    uuid: 721d7853-7cfe-4334-896f-566d6e7a3bb7
+    network: ws
+    tls: true
+    udp: true
+    servername: ljx111cloady-eo3429fa-tony0976.cloady.io
+    ws-opts:
+      path: /a8f3-media-streak
+      headers:
+        Host: ljx111cloady-eo3429fa-tony0976.cloady.io
+
+proxy-groups:
+  - name: PROXY
+    type: select
+    proxies:
+      - Cloady-Node
+      - DIRECT
+
+rules:
+  - MATCH,PROXY

@@ -1,0 +1,38 @@
+# Altare 斯德哥尔摩节点（双协议）
+# 服务器: altare-free-server（瑞典 Stockholm, AWS eu-north-1）
+# 出口 IP: 13.62.127.206
+# Altare-VLESS: TCP, 稳定保底
+# Altare-Hy2:   UDP/Hysteria2, 高延迟线路提速, 若连不上说明平台不放行 UDP, 用 VLESS 即可
+
+proxies:
+  - name: "Altare-VLESS"
+    type: vless
+    server: se-sto10.tryaltare.ai
+    port: 25239
+    uuid: 1f2ef094-1220-4a7c-9559-3b66fa331a68
+    network: tcp
+    udp: true
+    tls: true
+    skip-cert-verify: true
+    servername: www.microsoft.com
+    client-fingerprint: chrome
+
+  - name: "Altare-Hy2"
+    type: hysteria2
+    server: se-sto10.tryaltare.ai
+    port: 25239
+    password: uzQZiMO5nKwmGXoDJwGKPY2p
+    sni: www.microsoft.com
+    skip-cert-verify: true
+
+proxy-groups:
+  - name: "PROXY"
+    type: select
+    proxies:
+      - Altare-Hy2
+      - Altare-VLESS
+      - DIRECT
+
+rules:
+  - GEOIP,CN,DIRECT
+  - MATCH,PROXY
