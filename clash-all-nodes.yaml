@@ -1,8 +1,7 @@
 # 五节点总订阅（静态合并 · 路线一）
 # 节点: Altare 斯德哥尔摩 VLESS + Hy2 / Nodaroo 悉尼 Hy2 + VLESS / Cloady 美西 VLESS, 共 5 个
-# 原三条订阅原封不动, 总订阅新增一条; 节点参数与原文件一字未动, 分流规则与原三份完全相同 (514 条)
 # 分组: PROXY=手动选择 (可再选 自动选择/故障转移) / 自动选择=url-test 定时测速走最快 / 故障转移=当前挂了自动切下一个
-# 注意: 规则仍与单条订阅一致, 未新增 GEOIP,HK,DIRECT —— .hk 域名直连那一行是之前待定的建议, 不在此次合并里擅自改动
+# 2026-11-25 修复: 去除 YAML 锚点别名 (&id001/*id001), 否则 FlClash 解析不了分组
 mixed-port: 7890
 allow-lan: false
 mode: rule
@@ -94,7 +93,7 @@ proxy-groups:
   - DIRECT
 - name: 自动选择
   type: url-test
-  proxies: &id001
+  proxies:
   - Altare-VLESS
   - Altare-Hy2
   - Nodaroo-Hy2
@@ -105,7 +104,12 @@ proxy-groups:
   tolerance: 50
 - name: 故障转移
   type: fallback
-  proxies: *id001
+  proxies:
+  - Altare-VLESS
+  - Altare-Hy2
+  - Nodaroo-Hy2
+  - Nodaroo-VLESS
+  - Cloady-Node
   url: http://www.gstatic.com/generate_204
   interval: 300
 rules:
