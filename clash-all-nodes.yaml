@@ -1,7 +1,8 @@
 # 五节点总订阅（静态合并 · 路线一）
 # 节点: Altare 斯德哥尔摩 VLESS + Hy2 / Nodaroo 悉尼 Hy2 + VLESS / Cloady 美西 VLESS, 共 5 个
 # 分组: PROXY=手动选择 (可再选 自动选择/故障转移) / 自动选择=url-test 定时测速走最快 / 故障转移=当前挂了自动切下一个
-# 2026-11-25 修复: 去除 YAML 锚点别名 (&id001/*id001), 否则 FlClash 解析不了分组
+# 2026-11-25 修复1: 去除 YAML 锚点别名, 否则 FlClash 解析不了分组
+# 2026-11-25 修复2: DNS 去掉国外 DoH 兜底 (cloudflare/google 直连会被网络 RST, 手机端节点域名解析失败); 只用国内 DoH (阿里/腾讯)
 mixed-port: 7890
 allow-lan: false
 mode: rule
@@ -21,12 +22,6 @@ dns:
   nameserver:
   - https://dns.alidns.com/dns-query
   - https://doh.pub/dns-query
-  fallback:
-  - https://dns.google/dns-query
-  - https://cloudflare-dns.com/dns-query
-  fallback-filter:
-    geoip: true
-    geoip-code: CN
 proxies:
 - name: Altare-VLESS
   type: vless
